@@ -9,7 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    container: ghcr.io/zephyrproject-rtos/ci:v0.26.2 
+    container:
+      image: zmkfirmware/zmk-dev-arm:3.2
+      options: '--entrypoint /bin/bash'
     env:
       CMAKE_PREFIX_PATH: /opt/toolchains
     steps:
