@@ -18,11 +18,24 @@ jobs:
         with:
           path: example-application
 
+      - name: Cache west modules
+        id: cache-west-modules
+        uses: actions/cache@v3
+        env:
+          cache-name: v1
+        with:
+          path: |
+            modules/
+            zephyr/
+          key: zephyr-modules-${{ env.cache-name }}-${{ hashFiles('zephyr-example-application/west.yml') }}
+        timeout-minutes: 10
+        continue-on-error: true
+
       - name: Initialize
         working-directory: example-application
         run: |
           west init -l .
-          west update
+          west update --narrow
 
       - name: Build firmware
         working-directory: example-application
